@@ -1,0 +1,37 @@
+{
+  "name": "ct-gputest",
+  "description": "CT GPU System Check",
+  "properties": {
+    "isPublic": false,
+    "timeout": 36000
+  },
+  "containerDescriptors": [
+    {
+      "type": "GPUDOCKER",
+      "properties": {
+        "image": "pdlimp/private:gputest",
+        "domain": "gpu"
+      }
+    }
+  ],
+  "inputPortDescriptors": [
+    {
+      "name": "data",
+      "type": "string",
+      "description": "Input data",
+      "required": false
+    }
+  ],
+  "outputPortDescriptors": [
+    {
+      "name": "result",
+      "type": "directory",
+      "description": "The output data directory."
+    },
+    {
+      "name": "log",
+      "type": "directory",
+      "description": "The output data directory."
+    }
+  ]
+}

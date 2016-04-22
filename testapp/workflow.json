@@ -1,0 +1,37 @@
+{
+  "name": "ct-gputest workflow",
+  "tasks": [
+    {
+      "name": "task1",
+      "taskType": "ct-gputest",
+      "inputs": [
+        {
+          "name": "data",
+          "value": "s3://receiving-dgcs-tdgplatform-com/055204290010_01_003"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result"
+        },
+        {
+          "name": "log"
+        }
+      ]
+    },
+    {
+      "name": "StagetoS3",
+      "taskType": "StageDataToS3",
+      "inputs": [
+        {
+          "name": "data",
+          "source": "task1:log"
+        },
+        {
+          "name": "destination",
+          "value": "http://gbd-customer-data/7d8cfdb6-13ee-4a2a-bf7e-0aff4795d927/ctusk/gputest/log"
+        }
+      ]
+    }
+  ]
+}
