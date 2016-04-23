@@ -1,9 +1,9 @@
 #!/bin/bash
 BASE="centos:7"
 CONTAINERNAME='caffe-build'
-BASEIMAGE="caffebase-centos7"
-DEVIMAGE="caffedev-centos7"
-RUNTIMEIMAGE="caffe-centos7"
+BASEIMAGE="gbdx-centos7-cuda-7.0-346.46"
+DEVIMAGE="gbdx-centos7-cuda-7.0-346.46-dev"
+RUNTIMEIMAGE="gbdx-caffe-centos7"
 FINALIMAGE="pdlimp/private:caffetest"
 
 # Build Stages
@@ -44,13 +44,11 @@ fi
 
 if ${BUILD_RUNTIME}; then
   echo "-------------------------------------------------- Building runtime"
+  echo "See build/ build/build_runtime.log for details"
   docker run --name=$CONTAINERNAME \
-   --device=/dev/nvidiactl \
-   --device=/dev/nvidia-uvm \
-   --device=/dev/nvidia0 \
    --volume=`pwd`/build:/build \
    --workdir=/build \
-   $DEVIMAGE /bin/bash /build/build_runtime.sh
+   $DEVIMAGE /bin/bash /build/build_runtime.sh > build/build_runtime.log 2>&1 
   echo Status is $(docker wait $CONTAINERNAME)
   docker commit $CONTAINERNAME $RUNTIMEIMAGE
   docker rm $CONTAINERNAME

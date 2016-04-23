@@ -1,13 +1,12 @@
 #!/bin/bash
 BASE="ubuntu:14.04"
 CONTAINERNAME='caffe-build-ubuntu'
-BASEIMAGE="caffebase-ubuntu"
-DEVIMAGE="caffedev-ubuntu"
-RUNTIMEIMAGE="caffe-ubuntu"
-FINALIMAGE="pdlimp/private:caffetest-ubuntu"
+BASEIMAGE="gbdx-ubuntu-cuda-7.0-346.46"
+DEVIMAGE="gbdx-ubuntu-cuda-7.0-346.46-dev"
+RUNTIMEIMAGE="gbdx-caffe-ubuntu"
 
 # Build Stages
-BUILD_BASEIMAGE=false
+BUILD_BASEIMAGE=true
 BUILD_DEVIMAGE=true
 BUILD_RUNTIME=true
 BUILD_TESTAPP=false
@@ -48,20 +47,10 @@ if ${BUILD_RUNTIME}; then
   docker rmi $RUNTIMEIMAGE
   # Build the base image with minimum layers
   docker run --name=$CONTAINERNAME \
-   --device=/dev/nvidiactl \
-   --device=/dev/nvidia-uvm \
-   --device=/dev/nvidia0 \
    --volume=`pwd`/build:/build \
    --workdir=/build \
    $DEVIMAGE /bin/bash /build/build_runtime.sh
   echo Status is $(docker wait $CONTAINERNAME)
   docker commit $CONTAINERNAME $RUNTIMEIMAGE
   docker rm $CONTAINERNAME
-fi
-
-
-if ${BUILD_TESTAPP}; then
-  # Run docker build to construct final image with application
-  docker rmi $FINALIMAGE
-  docker build -t $FINALIMAGE docker
 fi

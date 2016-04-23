@@ -1,5 +1,6 @@
 #!/bin/bash
-yum install -y perl
+yum -y update
+yum install -y perl wget
 rm -rf /var/cache/yum/*
 ldconfig
 if ! [ -f cuda_7.0.28_linux.run ]; then

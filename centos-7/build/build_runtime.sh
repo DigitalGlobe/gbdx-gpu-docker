@@ -19,7 +19,7 @@ export BOOST_DIR=$INSTALL_HOME
 export HDF5_ROOT=$INSTALL_HOME
 export OpenCV_DIR=$INSTALL_HOME
 
-export BUILD_THREADS=20
+export BUILD_THREADS=8
 
 BUILD_OPENBLAS=true
 
@@ -46,7 +46,7 @@ OPENCV_CUDA_ARCH="2.0 3.0 3.5"
 BUILD_OPENCV_3=true
 BUILD_OPENCV_2=false
 
-export USE_CUDNN=0
+export USE_CUDNN=1
 BUILD_CAFFE_OPENBLAS=true
 
 # Additional modules needed for ODP
@@ -55,7 +55,7 @@ INSTALL_ODP_PYTHON_MODULES=false
 INSTALL_PYVISION=false
 
 # Package everything up
-BUILD_PACKAGE=true
+BUILD_PACKAGE=false
 
 # Set up install directory library dirs - link lib to lib64
 if ! [ -d ${INSTALL_HOME}/lib64 ]; then
@@ -96,8 +96,8 @@ fi
 
 if ${INSTALL_CYTHON}; then
   cd $BUILD_HOME
-  if ! [ -f build/get-pip.py ]; then
-    wget -P build https://bootstrap.pypa.io/get-pip.py
+  if ! [ -f get-pip.py ]; then
+    wget https://bootstrap.pypa.io/get-pip.py
   fi
   if ! [ -f $INSTALL_HOME/bin/pip ]; then
      python get-pip.py
@@ -107,8 +107,8 @@ fi
 
 if ${BUILD_NUMPY}; then
   cd $BUILD_HOME
-  if ! [ -f build/numpy-1.11.0.tar.gz ]; then
-    wget -O build/numpy-1.11.0.tar.gz  https://github.com/numpy/numpy/archive/v1.11.0.tar.gz
+  if ! [ -f numpy-1.11.0.tar.gz ]; then
+    wget -O numpy-1.11.0.tar.gz  https://github.com/numpy/numpy/archive/v1.11.0.tar.gz
   fi
   if ! [ -d numpy-1.11.0 ]; then
     tar xvfz numpy-1.11.0.tar.gz
@@ -151,8 +151,8 @@ fi
 
 if ${INSTALL_PYTHON_MODULES}; then
   cd $BUILD_HOME
-  if ! [ -f build/get-pip.py ]; then
-    wget -P build https://bootstrap.pypa.io/get-pip.py
+  if ! [ -f get-pip.py ]; then
+    wget https://bootstrap.pypa.io/get-pip.py
   fi
   if ! [ -f $INSTALL_HOME/bin/pip ]; then
      python get-pip.py
@@ -424,7 +424,7 @@ if ${BUILD_CAFFE_OPENBLAS}; then
         -DPYTHON_LIBRARY=${INSTALL_HOME}/lib/libpython2.7.so \
         ..
   make all -j ${BUILD_THREADS}
-  make runtest -j ${BUILD_THREADS}
+  #make runtest -j ${BUILD_THREADS}
   make install
 fi
 
@@ -446,8 +446,8 @@ fi
 
 if ${INSTALL_ODP_PYTHON_MODULES}; then
   cd $BUILD_HOME
-  if ! [ -f build/get-pip.py ]; then
-    wget -P build https://bootstrap.pypa.io/get-pip.py
+  if ! [ -f get-pip.py ]; then
+    wget -P https://bootstrap.pypa.io/get-pip.py
   fi
   if ! [ -f $INSTALL_HOME/bin/pip ]; then
      python get-pip.py

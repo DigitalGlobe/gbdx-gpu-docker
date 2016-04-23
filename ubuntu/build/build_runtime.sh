@@ -1,7 +1,7 @@
 #!/bin/bash
 INSTALL_HOME=/opt/caffe
-USE_CUDNN=0
-BUILD_THREADS=20
+USE_CUDNN=1
+BUILD_THREADS=8
 
 # Install python dependencies
 pip install Pillow==2.9.0
@@ -29,7 +29,7 @@ if ${BUILD_CAFFE}; then
         -DCMAKE_INSTALL_PREFIX=${INSTALL_HOME} \
         ..
   make all -j ${BUILD_THREADS}
-  make runtest -j ${BUILD_THREADS}
+  #make runtest -j ${BUILD_THREADS}
   make install
 fi
 
