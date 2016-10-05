@@ -1,0 +1,32 @@
+{
+  "name": "ct-cudatest",
+  "description": "Tests CUDA GPU docker",
+  "properties": {
+    "isPublic": false,
+    "timeout": 36000
+  },
+  "containerDescriptors": [
+    {
+      "type": "DOCKER",
+      "properties": {
+        "image": "pdlimp/private:cudatest",
+        "domain": "nvidiagpu"
+      }
+    }
+  ],
+  "inputPortDescriptors": [
+    {
+      "name": "data",
+      "type": "string",
+      "description": "Input data",
+      "required": false
+    }
+  ],
+  "outputPortDescriptors": [
+    {
+      "name": "log",
+      "type": "directory",
+      "description": "The output data directory."
+    }
+  ]
+}
