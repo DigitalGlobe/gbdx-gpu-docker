@@ -1,8 +1,8 @@
 FROM nvidia/cuda:7.5-cudnn5-devel
 MAINTAINER DigitalGlobe Inc. <ctusk@digitalglobe.com>
 RUN apt-get -y update && \
-    apt-get -y install python python-pip python-six python-numpy python-scipy \
-                       libopenblas-dev libyaml-dev && \
+    apt-get -y install python python-pip python-six python-dev libatlas-base-dev gfortran \
+                       libyaml-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN pip install Theano Keras
